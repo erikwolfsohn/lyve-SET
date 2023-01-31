@@ -72,17 +72,17 @@ clean-CGP:
 	rm -vf scripts/run_assembly_*
 
 install-vcftools:
-	wget --max-redirect 50 'http://downloads.sourceforge.net/project/vcftools/vcftools_0.1.12b.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fvcftools%2Ffiles%2F&ts=1409260024&use_mirror=ufpr' -O $(TMPDIR)/vcftools_0.1.12b.tar.gz
+	wget --max-redirect 50 https://github.com/vcftools/vcftools/archive/refs/tags/v0.1.13.tar.gz -O $(TMPDIR)/vcftools-0.1.13.tar.gz
 	cd $(TMPDIR) && \
-	tar zxvf vcftools_0.1.12b.tar.gz
-	mv $(TMPDIR)/vcftools_0.1.12b lib/
-	cd lib/vcftools_0.1.12b &&\
-    $(MAKE) --directory=. MAKEFLAGS=""
-	ln -rs $(PREFIX)/lib/vcftools_0.1.12b/perl/vcf-sort scripts/
-	ln -rs $(PREFIX)/lib/vcftools_0.1.12b/perl/Vcf.pm lib/
+	tar zxvf vcftools-0.1.13.tar.gz
+	mv $(TMPDIR)/vcftools-0.1.13 lib/
+	cd lib/vcftools-0.1.13 &&\
+	$(MAKE) --directory=. MAKEFLAGS=""
+	ln -rs $(PREFIX)/lib/vcftools-0.1.13/perl/vcf-sort scripts/
+	ln -rs $(PREFIX)/lib/vcftools-0.1.13/perl/Vcf.pm lib/
 
 clean-vcftools:
-	rm -rvf lib/vcftools_0.1.12b
+	rm -rvf lib/vcftools-0.1.13
 	rm -vf scripts/vcf-sort
 	rm -vf lib/Vcf.pm
 
@@ -194,7 +194,7 @@ clean-raxml:
 install-perlModules:
 	@echo "Installing Perl modules using cpanminus"
 	#for package in Config::Simple File::Slurp Math::Round Number::Range Statistics::Distributions Statistics::Descriptive Statistics::Basic Graph::Centrality::Pagerank String::Escape Statistics::LineFit; do
-	for package in Config::Simple File::Slurp Math::Round Number::Range Statistics::Distributions Statistics::Basic Graph::Centrality::Pagerank String::Escape Statistics::LineFit Array::IntSpan; do \
+	for package in Config::Simple File::Slurp Math::Round Number::Range Statistics::Distributions Statistics::Basic Graph::Centrality::Pagerank String::Escape Statistics::LineFit Array::IntSpan URI::Escape; do \
 	  perl scripts/cpanm --self-contained -L lib $$package; \
 		if [ $$? -gt 0 ]; then exit 1; fi; \
 	done;
